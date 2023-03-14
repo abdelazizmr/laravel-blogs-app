@@ -9,13 +9,18 @@
 <body>
  
         <h1 style="text-align:center; padding:20px; background-color:aliceblue"  >
-            <a href="/posts">Home</a>
+            <a href="/">Home</a>
         </h1>
+
+        <form action="/">
+            <input type="text" placeholder="serach a post.." name="search">
+        </form>
+
 
         @yield('content')
 
          <h1 style="text-align:center; padding:20px; background-color:aliceblue"  >
-            <a href="/">made by abdelazizmr</a>
+            &copy 2023
         </h1>
 
 </body>

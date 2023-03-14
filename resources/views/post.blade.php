@@ -5,3 +5,4 @@
     <span>{{$post['date_published']}}</span>   
 @endsection  
 
+

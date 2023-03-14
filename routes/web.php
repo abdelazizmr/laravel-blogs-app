@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 use App\Models\Post;
@@ -18,29 +18,10 @@ use App\Models\Post;
 
 
 
+Route::get('/',[PostController::class, 'index']);
 
+Route::get('/posts/{id}', [PostController::class, 'show']);
 
-
-
-Route::get('/', function () {
-    return '<h1>home</h1>';
-});
-
-Route::get('/posts', function(){
-    return view('posts',
-    [
-        'posts' => Post::all()         
-    ]
-    );
-});
-
-Route::get('/posts/{id}', function ($id) {
-    return view('post',
-        [
-            'post' => Post::find($id)
-        ]
-    );
-});
 
 // redirection
-Route::redirect('/logout', '/', 301);
+Route::redirect('/*', '/', 301);
