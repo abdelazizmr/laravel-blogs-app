@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -24,5 +25,25 @@ class PostController extends Controller
                 'post' => Post::find($id)
             ]
         );
+    }
+
+    // show the add post form 
+    public function create(){
+        return view('addPost');
+    }
+
+
+    // store the add post form data
+    public function store(Request $request){
+        $fields = $request->validate([
+            "title" => "required",
+            "body" => "required"
+        ]);
+
+
+        Post::create($fields);
+
+
+        return redirect('/');
     }
 }

@@ -17,9 +17,19 @@ use App\Models\Post;
 
 
 
-
+// get all posts
 Route::get('/',[PostController::class, 'index']);
 
+
+// show form for adding new post 
+Route::get('/posts/create', [PostController::class, 'create']);
+
+
+// store form data
+Route::post('/posts', [PostController::class, 'store']);
+
+
+// get a single post
 Route::get('/posts/{id}', [PostController::class, 'show']);
 
 

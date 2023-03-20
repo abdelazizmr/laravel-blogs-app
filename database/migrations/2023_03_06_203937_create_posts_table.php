@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('body');
-            $table->date('date_published');
+            $table->date('date_published')->default(now());
             $table->timestamps();
         });
     }

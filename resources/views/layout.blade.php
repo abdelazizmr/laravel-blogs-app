@@ -10,6 +10,7 @@
  
         <h1 style="text-align:center; padding:20px; background-color:aliceblue"  >
             <a href="/">Home</a>
+            <a href="/posts/create">Add a Post </a>
         </h1>
 
         <form action="/">

@@ -9,6 +9,8 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title','body'];
+
     public function scopeFilter($query, array $filters){
         if ($filters['search'] ?? false){
             $query->where('title', 'like', '%'.request('search').'%')
