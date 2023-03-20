@@ -25,12 +25,22 @@ Route::get('/',[PostController::class, 'index']);
 Route::get('/posts/create', [PostController::class, 'create']);
 
 
-// store form data
+// store the post in database
 Route::post('/posts', [PostController::class, 'store']);
 
 
+// show form for edit a post
+Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
+
+// update the post in the database
+Route::put('/posts/{post}', [PostController::class, 'update']);
+
+// delete the post from the database
+Route::delete('/posts/{post}', [PostController::class, 'destroy']);
+
+
 // get a single post
-Route::get('/posts/{id}', [PostController::class, 'show']);
+Route::get('/posts/{post}', [PostController::class, 'show']);
 
 
 // redirection

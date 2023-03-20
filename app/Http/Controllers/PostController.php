@@ -12,7 +12,7 @@ class PostController extends Controller
         return view(
             'posts',
             [
-                'posts' => Post::latest()->filter(request(['search']))->get()
+                'posts' => Post::latest()->filter(request(['search']))->simplePaginate(6)
             ]
         );
     }
@@ -43,6 +43,39 @@ class PostController extends Controller
 
         Post::create($fields);
 
+
+        return redirect('/');
+    }
+
+    // show form to edit a post
+    public function edit(Post $post){
+       // dd(Post::find($id));
+        return view(
+            'editPost',
+            [
+                'post' => $post
+            ]
+        );
+    }
+
+    // update the post in the database
+    public function update(Request $request, Post $post)
+    {
+        $fields = $request->validate([
+            "title" => "required",
+            "body" => "required"
+        ]);
+
+        $post->update($fields);
+
+        return redirect('/');
+    }
+    
+    
+    // delete the post from the database
+    public function destroy(Post $post)
+    {
+        $post->delete();
 
         return redirect('/');
     }
