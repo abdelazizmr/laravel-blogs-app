@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\userController;
 use Illuminate\Support\Facades\Route;
 
 use App\Models\Post;
@@ -45,3 +46,13 @@ Route::get('/posts/{post}', [PostController::class, 'show']);
 
 // redirection
 Route::redirect('/*', '/', 301);
+
+
+//?==================== user routes ==========================
+
+// show signup form
+Route::get('/signup', [userController::class, 'create']);
+
+
+// add w new user
+Route::post('/signup', [userController::class, 'store']);
