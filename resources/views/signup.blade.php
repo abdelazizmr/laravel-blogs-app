@@ -11,7 +11,7 @@
 </head>
 <body style="background-color: #f6f6f6">
     <div class="container" >
-        <h2 class="text-center mt-5"> SIGN UP </h2>
+        <h2 class="text-center mt-5"> CREATE NEW ACCOUNT </h2>
 
         <form action="/signup" method="POST" class="mt-5 mx-auto">
             @csrf

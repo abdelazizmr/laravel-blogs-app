@@ -54,5 +54,17 @@ Route::redirect('/*', '/', 301);
 Route::get('/signup', [userController::class, 'create']);
 
 
-// add w new user
+// add new user
 Route::post('/signup', [userController::class, 'store']);
+
+// show login form
+Route::get('/login', [userController::class, 'login']);
+
+
+// login user
+Route::post('/login', [userController::class, 'authencticate']);
+
+
+
+// logout the user
+Route::post('/logout', [userController::class, 'logout']);

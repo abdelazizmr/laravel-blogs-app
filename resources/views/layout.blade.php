@@ -41,14 +41,33 @@
             <a href="/"><h4>Home</h4></a>
             @auth
                 <div class="d-flex justify-content-center gap-3 flex-wrap">
-                    <span>{{auth()->user()->name}}</span>
-                    <a href="/posts/create">Add a Post </a>
-                    <a href="/logout">Log out</a>
+                    
+                    <a href="/posts/create">
+                        <i class="fa-sharp fa-regular fa-plus"></i>
+                        Add a Post 
+                    </a>
+                    <span>
+                        <i class="fa-solid fa-user"></i>
+                        {{auth()->user()->name}}
+                    </span>
+                    <form action="/logout" method="POST">
+                        @csrf
+                        <button type="submit">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            Log out
+                        </button>
+                    </form>
                 </div>
             @else
                 <div class="d-flex justify-content-center gap-3 flex-wrap">
-                    <a href="/signup">Sign up</a>
-                    <a href="/login">Log in</a>
+                    <a href="/signup">
+                        <i class="fa-solid fa-user-plus"></i>
+                        Sign up
+                    </a>
+                    <a href="/login">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        Log in
+                    </a>
                 </div>
             @endauth
         </header>
