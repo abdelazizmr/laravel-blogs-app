@@ -34,18 +34,22 @@ class PostController extends Controller
 
 
     // store the add post form data
-    public function store(Request $request){
-        $fields = $request->validate([
-            "title" => "required",
-            "body" => "required"
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'body' => 'required',
         ]);
 
-
-        Post::create($fields);
-
+        $post = new Post;
+        $post->title = $validatedData['title'];
+        $post->body = $validatedData['body'];
+        $post->user_id = auth()->id();
+        $post->save();
 
         return redirect('/');
     }
+
 
     // show form to edit a post
     public function edit(Post $post){

@@ -19,7 +19,7 @@
                     <a href="/posts/{{$post['id']}}">
                         <h4>{{$post['title']}}</h4>  
                     </a>
-                    @auth
+                    @if ( $post->user->id == auth()->id() )
                     <div class="d-flex gap-3">
                         <a href="/posts/{{$post['id']}}/edit">
                             <i class="fa-solid fa-pen-to-square"></i>
@@ -30,10 +30,11 @@
                             <button class="text-danger"><i class="fa-solid fa-trash"></i></button>
                         </form>
                     </div>    
-                    @endauth 
+                    @endif
                 </div>
                 <p>{{strlen($post['body']) > 50 ? substr($post['body'],0,20).'...' : $post['body'] }}</p>  
-                <p>{{$post['date_published']}}</p>       
+                <p>{{$post['date_published']}}</p> 
+                <p>Author : <span class="text-success">{{$post->user->name}}</span></p>      
                 
             </div>
         @endforeach

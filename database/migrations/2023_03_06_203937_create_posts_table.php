@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('title');
             $table->longText('body');
-            $table->date('date_published')->default(now());
+            $table->date('date_published')->default(time());
             $table->timestamps();
         });
     }

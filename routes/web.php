@@ -16,55 +16,52 @@ use App\Models\Post;
 |
 */
 
+Route::middleware(['guest'])->group(function () {
+    // show signup form
+    Route::get('/signup', [userController::class, 'create']);
+
+    // add new user
+    Route::post('/signup', [userController::class, 'store']);
+
+    // show login form
+    Route::get('/login', [userController::class, 'login'])->name('login');
+
+    // login user
+    Route::post('/login', [userController::class, 'authencticate'])->name('login');
+});
+
+Route::middleware(['auth'])
+    ->group(function () {
+    // get all posts
+    Route::get('/', [PostController::class, 'index']);
 
 
-// get all posts
-Route::get('/',[PostController::class, 'index']);
+    // show form for adding new post 
+    Route::get('/posts/create', [PostController::class, 'create']);
 
 
-// show form for adding new post 
-Route::get('/posts/create', [PostController::class, 'create']);
+    // store the post in database
+    Route::post('/posts', [PostController::class, 'store']);
 
 
-// store the post in database
-Route::post('/posts', [PostController::class, 'store']);
+    // show form for edit a post
+    Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
+
+    // update the post in the database
+    Route::put('/posts/{post}', [PostController::class, 'update']);
+
+    // delete the post from the database
+    Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 
 
-// show form for edit a post
-Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
-
-// update the post in the database
-Route::put('/posts/{post}', [PostController::class, 'update']);
-
-// delete the post from the database
-Route::delete('/posts/{post}', [PostController::class, 'destroy']);
+    // get a single post
+    Route::get('/posts/{post}', [PostController::class, 'show']);
 
 
-// get a single post
-Route::get('/posts/{post}', [PostController::class, 'show']);
-
-
-// redirection
-Route::redirect('/*', '/', 301);
-
-
-//?==================== user routes ==========================
-
-// show signup form
-Route::get('/signup', [userController::class, 'create']);
-
-
-// add new user
-Route::post('/signup', [userController::class, 'store']);
-
-// show login form
-Route::get('/login', [userController::class, 'login']);
-
-
-// login user
-Route::post('/login', [userController::class, 'authencticate']);
+    // logout the user
+    Route::post('/logout', [userController::class, 'logout']);
+    });
 
 
 
-// logout the user
-Route::post('/logout', [userController::class, 'logout']);
+
