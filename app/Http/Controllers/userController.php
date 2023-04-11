@@ -10,7 +10,7 @@ class userController extends Controller
 {
     // show signup form 
     public function create(){
-        return view('signup');
+        return view('auth.signup');
     }
 
 
@@ -40,7 +40,7 @@ class userController extends Controller
 
     // show login form 
     public function login(){
-        return view('login');
+        return view('auth.login');
     }
 
     // login the user 

@@ -31,6 +31,11 @@
             @enderror
             
             <button type="submit" class="btn btn-primary mt-3 w-100">Login</button>
+
+            <div class="mt-5 d-flex justify-content-center gap-3">
+                <span>Don't have an account ?</span>
+                <a href="/signup" class="text-center">Register</a>
+            </div>
         </form>
     </div>
 </body>

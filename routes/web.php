@@ -43,7 +43,6 @@ Route::middleware(['auth'])
     // store the post in database
     Route::post('/posts', [PostController::class, 'store']);
 
-
     // show form for edit a post
     Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
 
@@ -60,7 +59,7 @@ Route::middleware(['auth'])
 
     // logout the user
     Route::post('/logout', [userController::class, 'logout']);
-    });
+});
 
 
 

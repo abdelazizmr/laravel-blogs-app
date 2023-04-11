@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layout.app')
 
 @section('content')
     
@@ -33,7 +33,7 @@
                     @endif
                 </div>
                 <p>{{strlen($post['body']) > 50 ? substr($post['body'],0,20).'...' : $post['body'] }}</p>  
-                <p>{{$post['date_published']}}</p> 
+                <p>{{$post['created_at']}}</p> 
                 <p>Author : <span class="text-success">{{$post->user->name}}</span></p>      
                 
             </div>

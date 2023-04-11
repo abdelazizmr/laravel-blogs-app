@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,7 @@ class PostController extends Controller
     // show all posts 
     public function index(){
         return view(
-            'posts',
+            'posts.index',
             [
                 'posts' => Post::latest()->filter(request(['search']))->simplePaginate(6)
             ]
@@ -19,17 +20,25 @@ class PostController extends Controller
 
     // show a single post
     public function show($id){
+
+        $post = Post::find($id);
+        $comments = $post->comments;
+        // test
+        // $comment = Comment::find(6);
+        // dd($comment->children());
+
         return view(
-            'post',
+            'specificPost.post',
             [
-                'post' => Post::find($id)
+                'post' => $post,
+                'comments' => $comments
             ]
         );
     }
 
     // show the add post form 
     public function create(){
-        return view('addPost');
+        return view('posts.addPost');
     }
 
 
@@ -53,9 +62,9 @@ class PostController extends Controller
 
     // show form to edit a post
     public function edit(Post $post){
-       // dd(Post::find($id));
+
         return view(
-            'editPost',
+            'posts.editPost',
             [
                 'post' => $post
             ]
