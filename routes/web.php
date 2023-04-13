@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\userController;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +56,22 @@ Route::middleware(['auth'])
 
     // get a single post
     Route::get('/posts/{post}', [PostController::class, 'show']);
+
+    //!=====================================================================  
+
+    // Add new comment
+    Route::post('/posts/{post}/comments', [CommentController::class, 'store']);
+
+    
+    // Show form to edit a comment
+    Route::get('/posts/comments/{comment}', [CommentController::class, 'edit']);
+
+
+    // Show form to edit a comment
+    Route::put('/posts/comments/{comment}', [CommentController::class, 'update']);
+    
+    // Delete a comment
+    Route::delete('/posts/comments/{comment}', [CommentController::class, 'destroy']);
 
 
     // logout the user

@@ -11,14 +11,14 @@
 
 
     {{-- comments section --}}
-    @include('components.commentsList')
+    @include('comments.commentsList')
 
 
 
 
     {{-- comment form --}}
 
-    @include('components.commentForm')
+    @include('comments.commentForm')
 
     
 

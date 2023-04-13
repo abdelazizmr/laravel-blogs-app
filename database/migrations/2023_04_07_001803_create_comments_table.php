@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('post_id');
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
             $table->longText('body');
-            $table->integer('likes');
+            $table->integer('likes')->default(0);
             $table->timestamps();
         });
     }
