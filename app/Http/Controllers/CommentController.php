@@ -67,8 +67,6 @@ class CommentController extends Controller
 
         $post_id = $comment->post_id ;
 
-        // dd($post_id);
-
         return redirect('/posts/'.$post_id);
     }
 
@@ -79,5 +77,54 @@ class CommentController extends Controller
     {
         $comment->delete();
         return back();
+    }
+
+    /**
+     * Like a comment.
+    */
+    public function like(Comment $comment)
+    {
+        $comment->likes += 1;
+        $comment->save();
+        return back();
+    }
+
+    /**
+     * Show form to reply to a comment
+    */
+
+    public function reply(Comment $comment){
+        return view('comments.replyComment',[
+            'comment' => $comment
+        ]);
+    } 
+    
+    
+    /**
+     * Stroe reply to a comment
+    */
+
+    public function storeReply(Request $request, Comment $comment){
+
+        $validatedData = $request->validate([
+            'body' => 'required',
+        ]);
+
+
+        $post_id = $comment->post_id;
+
+
+
+        $comment = new Comment;
+        $comment->parent_id = $comment->id;
+        $comment->post_id = $post_id;
+        $comment->user_id = auth()->id();
+        $comment->body = $validatedData['body'];
+        $comment->likes = 0;
+        dd($comment);
+        $comment->save();
+
+        return redirect('/posts/' . $post_id);
+ 
     }
 }

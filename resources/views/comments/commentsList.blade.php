@@ -8,10 +8,11 @@
                     <h5 class="comment-author font-weight-bold my-3 text-warning">{{ $comment->user->name }}</h5>
                     <div class="comment-actions d-flex justify-content-center gap-3">
 
-                        <a href=""><i class="fa-solid fa-reply"></i></a>
-                        <a href="/posts/comments/{{$comment->id}}"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="/posts/comments/{{$comment->id}}/reply"><i class="fa-solid fa-reply"></i></a>
+                      
 
                         @if (auth()->check() && auth()->user()->id === $comment->user_id)
+                            <a href="/posts/comments/{{$comment->id}}"><i class="fa-solid fa-pen-to-square"></i></a>
                             <form method="POST" action="/posts/comments/{{$comment->id}}">
                                 @csrf
                                 @method('DELETE')
@@ -28,7 +29,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center align-items-center gap-2 my-2">
-                    <form action="">
+                    <form action="/posts/comments/{{$comment->id}}/like" method="POST">
                         @csrf
                         <button>
                             <i class="fa-solid fa-thumbs-up"></i>
@@ -37,21 +38,23 @@
                     <span>{{$comment->likes}} Likes</span>
                 </div>
 
-                {{-- <div class="d-flex">
-                    @if ($comment->children()->count() > 0)
+                {{-- replies --}}
+                <div class="d-flex">
+                    @if ($comment->replies()->count() > 0)
 
-                    <ul class="comment-replies w-70 ms-5">
-                        @foreach ($comment->children() as $reply)
+                    <ul class="comment-replies w-70 ms-5 d-flex justfiy-content-end my-2">
+                        @foreach ($comment->replies as $reply)
                             <li class="comment-reply">
                                 <div class="comment-body">{{ $reply->body }}</div>
                                 <div class="comment-author">{{ $reply->user->name }}</div>
                             </li>
                         @endforeach
-                    </ul>
+                    </ul>        
                     @else
-                        <span>hello world</span>
+                        <span>No reply to this comment</span>
                     @endif
-                </div> --}}
+                 
+                </div>
                     
             
             </li>

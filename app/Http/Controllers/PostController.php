@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     // show all posts 
-    public function index(){
+    public function index()
+    {
         return view(
             'posts.index',
             [
@@ -19,13 +20,13 @@ class PostController extends Controller
     }
 
     // show a single post
-    public function show($id){
+    public function show($id)
+    {
 
         $post = Post::find($id);
         $comments = $post->comments;
-        // test
-        // $comment = Comment::find(6);
-        // dd($comment->children());
+        
+        //dd($comment->replies);
 
         return view(
             'specificPost.post',
@@ -37,7 +38,8 @@ class PostController extends Controller
     }
 
     // show the add post form 
-    public function create(){
+    public function create()
+    {
         return view('posts.addPost');
     }
 
@@ -61,7 +63,8 @@ class PostController extends Controller
 
 
     // show form to edit a post
-    public function edit(Post $post){
+    public function edit(Post $post)
+    {
 
         return view(
             'posts.editPost',
@@ -83,8 +86,8 @@ class PostController extends Controller
 
         return redirect('/');
     }
-    
-    
+
+
     // delete the post from the database
     public function destroy(Post $post)
     {

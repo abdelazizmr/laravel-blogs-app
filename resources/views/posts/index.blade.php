@@ -6,7 +6,7 @@
         
         <h1 class="text-danger text-center" >All Posts</h1>
 
-        <form action="/" class="my-5 d-flex justify-content-end align-items-center gap-2">
+        <form  class="my-5 d-flex justify-content-end align-items-center gap-2">
             <input type="text" placeholder="Serach a post.." name="search" class="form-control search-inp">
             <button>
                 <i class="fa-solid fa-magnifying-glass"></i>

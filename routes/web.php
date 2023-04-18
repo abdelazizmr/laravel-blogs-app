@@ -33,51 +33,58 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth'])
     ->group(function () {
-    // get all posts
-    Route::get('/', [PostController::class, 'index']);
+        // get all posts
+        Route::get('/', [PostController::class, 'index']);
 
 
-    // show form for adding new post 
-    Route::get('/posts/create', [PostController::class, 'create']);
+        // show form for adding new post 
+        Route::get('/posts/create', [PostController::class, 'create']);
 
 
-    // store the post in database
-    Route::post('/posts', [PostController::class, 'store']);
+        // store the post in database
+        Route::post('/posts', [PostController::class, 'store']);
 
-    // show form for edit a post
-    Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
+        // show form for edit a post
+        Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
 
-    // update the post in the database
-    Route::put('/posts/{post}', [PostController::class, 'update']);
+        // update the post in the database
+        Route::put('/posts/{post}', [PostController::class, 'update']);
 
-    // delete the post from the database
-    Route::delete('/posts/{post}', [PostController::class, 'destroy']);
-
-
-    // get a single post
-    Route::get('/posts/{post}', [PostController::class, 'show']);
-
-    //!=====================================================================  
-
-    // Add new comment
-    Route::post('/posts/{post}/comments', [CommentController::class, 'store']);
-
-    
-    // Show form to edit a comment
-    Route::get('/posts/comments/{comment}', [CommentController::class, 'edit']);
+        // delete the post from the database
+        Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 
 
-    // Show form to edit a comment
-    Route::put('/posts/comments/{comment}', [CommentController::class, 'update']);
-    
-    // Delete a comment
-    Route::delete('/posts/comments/{comment}', [CommentController::class, 'destroy']);
+        // get a single post
+        Route::get('/posts/{post}', [PostController::class, 'show']);
+
+        //!=====================================================================  
+
+        // Add new comment
+        Route::post('/posts/comments/{post}', [CommentController::class, 'store']);
 
 
-    // logout the user
-    Route::post('/logout', [userController::class, 'logout']);
-});
+        // Show form to edit a comment
+        Route::get('/posts/comments/{comment}', [CommentController::class, 'edit']);
+
+
+        // Show form to edit a comment
+        Route::put('/posts/comments/{comment}', [CommentController::class, 'update']);
+
+        // Delete a comment
+        Route::delete('/posts/comments/{comment}', [CommentController::class, 'destroy']);
+
+
+        // Like a comment
+        Route::post('/posts/comments/{comment}/like', [CommentController::class, 'like']);
+
+        // Show form to reply to a comment
+        Route::get('/posts/comments/{comment}/reply', [CommentController::class, 'reply']);
+
+        // Reply to a comment
+        Route::post('/posts/comments/{comment}/reply', [CommentController::class, 'storeReply']);
 
 
 
-
+        // logout the user
+        Route::post('/logout', [userController::class, 'logout']);
+    });
