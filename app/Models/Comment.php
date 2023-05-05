@@ -4,6 +4,7 @@
 
 namespace App\Models;
 
+use App\Models\Like;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
@@ -24,4 +25,17 @@ class Comment extends Model
     {
         return $this->hasMany(Comment::class, 'parent_id');
     }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'comment_id');
+    }
+
+    // public function likedBy($userId)
+    // {
+    //     return $this->likes()->contains('user_id', $userId);
+    // }
+
+
+
 }

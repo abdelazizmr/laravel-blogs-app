@@ -28,5 +28,11 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class)->where('parent_id', null);;
     }
+
+
+    // public function nestedComments()
+    // {
+    //     return $this->hasMany('Comment')->where('comment_parent', 0);
+    // }
     
 }

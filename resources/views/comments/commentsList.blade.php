@@ -1,5 +1,5 @@
 @if ($comments->count() > 0)
-    <h2 class="text-danger text-center mb-3">Comments</h2>
+    <h4 class="text-danger text-center mb-3"> Comments </h2>
 
     <ul class="list-group p-3">
         @foreach ($post->comments as $comment)
@@ -12,11 +12,13 @@
                       
 
                         @if (auth()->check() && auth()->user()->id === $comment->user_id)
-                            <a href="/posts/comments/{{$comment->id}}"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="/posts/comments/{{$comment->id}}">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
                             <form method="POST" action="/posts/comments/{{$comment->id}}">
                                 @csrf
                                 @method('DELETE')
-                                <button class="text-danger"><i class="fa-solid fa-trash"></i></button>
+                                <button onclick="return confirm('Confirm deleting this comment ')" class="text-danger"><i class="fa-solid fa-trash"></i></button>
                             </form>
                         @endif
                     </div>
@@ -25,33 +27,56 @@
 
 
                 <div>
-                    <p class="comment-body">{{ $comment->body }}</p>
+                    <p class="comment-body card-text">{{ $comment->body }}</p>
                 </div>
 
                 <div class="d-flex justify-content-center align-items-center gap-2 my-2">
                     <form action="/posts/comments/{{$comment->id}}/like" method="POST">
                         @csrf
-                        <button>
-                            <i class="fa-solid fa-thumbs-up"></i>
-                        </button>
+                            @php
+                                $liked = $comment->likes()
+                                ->where('user_id', auth()->id())
+                                ->where('comment_id', $comment->id)
+                                ->exists();
+                            @endphp
+                     
+                            @if($liked)
+                            <button class="text-danger">
+                                <i class="fa-solid fa-thumbs-up"></i>  
+                            </button>
+                            @else
+                                <button>
+                                    <i class="fa-solid fa-thumbs-up"></i>  
+                                </button>
+                            @endif            
+ 
                     </form>
                     <span>{{$comment->likes}} Likes</span>
                 </div>
 
                 {{-- replies --}}
                 <div class="d-flex">
+
                     @if ($comment->replies()->count() > 0)
 
-                    <ul class="comment-replies w-70 ms-5 d-flex justfiy-content-end my-2">
+                    <ul class="comment-replies ms-3 my-2">
                         @foreach ($comment->replies as $reply)
-                            <li class="comment-reply">
-                                <div class="comment-body">{{ $reply->body }}</div>
-                                <div class="comment-author">{{ $reply->user->name }}</div>
+                            <li class="comment-reply my-3">
+                                <div class="comment-author font-weight-bold text-success">
+                                    {{ $reply->user->name }}
+                                </div>
+                                <div class="comment-body d-flex flex-wrap gap-2">
+                                    <div class="font-weight-bold text-warning">
+                                        <span>@</span>
+                                        <span>{{$comment->user->name}}</span>
+                                    </div>
+                                    <p>{{ $reply->body }}</p>
+                                </div>
                             </li>
                         @endforeach
                     </ul>        
                     @else
-                        <span>No reply to this comment</span>
+                        <span class="mb-2 text-danger">No reply to this comment</span>
                     @endif
                  
                 </div>

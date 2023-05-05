@@ -25,8 +25,10 @@ class PostController extends Controller
 
         $post = Post::find($id);
         $comments = $post->comments;
+    
+
         
-        //dd($comment->replies);
+        // dd($comments[0]->replies);
 
         return view(
             'specificPost.post',

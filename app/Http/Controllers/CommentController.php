@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Like;
 use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
@@ -80,16 +82,6 @@ class CommentController extends Controller
     }
 
     /**
-     * Like a comment.
-    */
-    public function like(Comment $comment)
-    {
-        $comment->likes += 1;
-        $comment->save();
-        return back();
-    }
-
-    /**
      * Show form to reply to a comment
     */
 
@@ -111,20 +103,64 @@ class CommentController extends Controller
         ]);
 
 
-        $post_id = $comment->post_id;
+        $reply = new Comment;
+        $reply->parent_id = $comment->id;
+        $reply->post_id = $comment->post_id;
+        $reply->user_id = auth()->id();
+        $reply->body = $validatedData['body'];
+        $reply->likes = 0;
+        
+        $reply->save();
 
-
-
-        $comment = new Comment;
-        $comment->parent_id = $comment->id;
-        $comment->post_id = $post_id;
-        $comment->user_id = auth()->id();
-        $comment->body = $validatedData['body'];
-        $comment->likes = 0;
-        dd($comment);
-        $comment->save();
-
-        return redirect('/posts/' . $post_id);
+        return redirect('/posts/' . $comment->post_id);
  
+    }
+
+    /**
+     * Like a comment.
+     */
+    public function like(Comment $comment)
+    {
+
+        $user_id = auth()->id();
+
+        // dd($user_id);
+
+
+        // $liked = DB::table('comments_likes')
+
+        $like = $comment->likes()
+        ->where('user_id', $user_id)
+        ->where('comment_id', $comment->id)
+        ->first();
+
+     
+
+
+        // dd($like->id);
+
+        if ($like) {
+            // User has liked this comment
+            // Decrement likes count
+            $comment->decrement('likes');
+            // delete it from likes table
+            $like->delete();
+        } else {
+            // User has not liked this comment
+            // Increment likes count
+            $comment->increment('likes');
+
+            // save like in comments_likes table
+            $like = new Like;
+
+            $like->comment_id = $comment->id;
+            $like->user_id = $user_id;
+
+            $like->save();
+        }
+
+
+
+        return back();
     }
 }

@@ -73,16 +73,15 @@ Route::middleware(['auth'])
         // Delete a comment
         Route::delete('/posts/comments/{comment}', [CommentController::class, 'destroy']);
 
-
-        // Like a comment
-        Route::post('/posts/comments/{comment}/like', [CommentController::class, 'like']);
-
         // Show form to reply to a comment
         Route::get('/posts/comments/{comment}/reply', [CommentController::class, 'reply']);
 
         // Reply to a comment
         Route::post('/posts/comments/{comment}/reply', [CommentController::class, 'storeReply']);
 
+
+        // Like a comment
+        Route::post('/posts/comments/{comment}/like', [CommentController::class, 'like']);
 
 
         // logout the user

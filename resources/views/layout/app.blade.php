@@ -6,15 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Posts || laravel</title>
     {{-- bootsratp --}}
+    {{-- css --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    {{-- js --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js">
     {{-- font awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    
 
     <style>
 
-        header,footer{
-            background-color: rgb(245, 245, 180);
-        }
+      
 
         button{
             border: none;
@@ -37,55 +39,63 @@
 
 </head>
 <body>
-        <header  class="p-4 mb-4 mx-auto d-flex justify-content-between"  >
-            <a href="/"><h4>Home</h4></a>
+        <header class="p-4 mb-4 mx-auto d-flex justify-content-between bg-light">
+        <a class="text-decoration-none" href="/">
+            <h4 class="text-primary">Home</h4>
+                </a>
             @auth
-                <div class="d-flex justify-content-center gap-3 flex-wrap">
-                    
-                    <a href="/posts/create">
+                <div class="d-flex align-items-center gap-3 flex-wrap">
+                    <a class="btn btn-primary" href="/posts/create">
                         <i class="fa-sharp fa-regular fa-plus"></i>
-                        Add a Post 
+                        Add a Post
                     </a>
-                    <span>
-                        <i class="fa-solid fa-user"></i>
-                        {{auth()->user()->name}}
-                    </span>
-                    <form action="/logout" method="POST">
-                        @csrf
-                        <button type="submit">
-                            <i class="fa-solid fa-right-from-bracket"></i>
-                            Log out
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-user"></i>
+                            {{ auth()->user()->name }}
                         </button>
-                    </form>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <a class="dropdown-item" href="#">Profile</a>
+                            </li>
+                            <li>
+                                <form action="/logout" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">
+                                    Log out
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
             @else
-                <div class="d-flex justify-content-center gap-3 flex-wrap">
-                    <a href="/signup">
+                <div class="d-flex align-items-center gap-3 flex-wrap">
+                    <a class="btn btn-primary" href="/signup">
                         <i class="fa-solid fa-user-plus"></i>
                         Sign up
                     </a>
-                    <a href="/login">
+                    <a class="btn btn-secondary" href="/login">
                         <i class="fa-solid fa-right-to-bracket"></i>
                         Log in
                     </a>
                 </div>
             @endauth
-        </header>
+</header>
+
         <div class="container px-5">
 
 
             
 
-            <div>
+      
                 @yield('content')
-            </div>
+        
 
 
         </div>    
   
-         <footer class="mt-5 text-center fixed-bottom">
-            &copy 2023
-        </footer>
 
 </body>
 </html>

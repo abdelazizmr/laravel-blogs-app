@@ -1,51 +1,59 @@
 @extends('layout.app')
 
 @section('content')
-    
-    @unless ( count($posts) == 0 )
+
+    <div class="container my-5">
         
-        <h1 class="text-danger text-center" >All Posts</h1>
+        @unless ( count($posts) == 0 )
 
-        <form  class="my-5 d-flex justify-content-end align-items-center gap-2">
-            <input type="text" placeholder="Serach a post.." name="search" class="form-control search-inp">
-            <button>
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-        </form>
+            <h1 class="text-primary text-center mb-4">All Posts</h1>
 
-        @foreach ($posts as $post)
-            <div style="border:1px solid gray" class="p-4 rounded my-5">
-                <div class="d-flex justify-content-between align-items-center">
-                    <a href="/posts/{{$post['id']}}">
-                        <h4>{{$post['title']}}</h4>  
-                    </a>
-                    @if ( $post->user->id == auth()->id() )
-                    <div class="d-flex gap-3">
-                        <a href="/posts/{{$post['id']}}/edit">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a> 
-                        <form method="POST" action="posts/{{$post['id']}}">
-                            @csrf
-                            @method('DELETE')
-                            <button class="text-danger"><i class="fa-solid fa-trash"></i></button>
-                        </form>
-                    </div>    
-                    @endif
+            <form class="d-flex justify-content-end align-items-center mb-5 gap-2">
+                <input type="text" placeholder="Search a post.." name="search" class="form-control search-inp">
+                <button>
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+
+            @foreach ($posts as $post)
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <a href="/posts/{{$post['id']}}">
+                            <h5 class="card-title">{{$post['title']}}</h5>
+                        </a>
+                        @if ( $post->user->id == auth()->id() )
+                        <div class="d-flex gap-3">
+                            <a href="/posts/{{$post['id']}}/edit" class="btn btn-sm btn-secondary">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <form method="POST" action="posts/{{$post['id']}}">
+                                @csrf
+                                @method('DELETE')
+                                <button onclick="return confirm('Confirm deleting this post')" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                        @endif
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{strlen($post['body']) > 50 ? substr($post['body'],0,20).'...' : $post['body'] }}</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <p class="card-text"><small class="text-muted">Published {{$post->created_at->diffForHumans()}}</small></p>
+                        <p class="card-text"><small class="text-muted text-bold text-success">Author: {{$post->user->name}}</small></p>
+                    </div>
                 </div>
-                <p>{{strlen($post['body']) > 50 ? substr($post['body'],0,20).'...' : $post['body'] }}</p>  
-                <p>{{$post['created_at']}}</p> 
-                <p>Author : <span class="text-success">{{$post->user->name}}</span></p>      
-                
+            @endforeach
+
+            <div class="d-flex justify-content-center align-items-center gap-3 flex-wrap my-5">
+                {{$posts->links()}}
             </div>
-        @endforeach
 
-    @else
-        <h1 class="text-danger text-center">There 's no posts</h1>
+        @else
+            <h1 class="text-danger text-center">There's no posts</h1>
+        @endunless
 
-    @endunless
-
-    <div class="d-flex justify-content-center align-items-center gap-3 flex-wrap my-5">
-        {{$posts->links()}}
     </div>
 
 @endsection
