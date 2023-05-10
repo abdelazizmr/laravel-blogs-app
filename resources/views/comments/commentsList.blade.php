@@ -5,7 +5,10 @@
         @foreach ($post->comments as $comment)
             <li class="list-group-item">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="comment-author font-weight-bold my-3 text-warning">{{ $comment->user->name }}</h5>
+                    <div class="d-flex align-items-center gap-2">
+                        <img src="/images/{{$post->user->profile->profile_image}}" alt="profile" width="30px" height="30px" style="border-radius:50%">
+                        <h5 class="comment-author font-weight-bold my-3 text-warning">{{ $comment->user->name }}</h5>
+                    </div>
                     <div class="comment-actions d-flex justify-content-center gap-3">
 
                         <a href="/posts/comments/{{$comment->id}}/reply"><i class="fa-solid fa-reply"></i></a>
@@ -27,7 +30,7 @@
 
 
                 <div>
-                    <p class="comment-body card-text">{{ $comment->body }}</p>
+                    <p class="comment-body card-text px-5">{{ $comment->body }}</p>
                 </div>
 
                 <div class="d-flex justify-content-center align-items-center gap-2 my-2">

@@ -31,7 +31,7 @@ class PostController extends Controller
         // dd($comments[0]->replies);
 
         return view(
-            'specificPost.post',
+            'posts.show',
             [
                 'post' => $post,
                 'comments' => $comments
@@ -96,5 +96,14 @@ class PostController extends Controller
         $post->delete();
 
         return redirect('/');
+    }
+
+    // Show my posts
+    public function myPosts(){
+
+
+        return view('posts.index',[
+            'posts' => Post::where('user_id', auth()->id())->latest()->simplePaginate(6)
+        ]);
     }
 }

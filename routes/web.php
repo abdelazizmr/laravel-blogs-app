@@ -6,6 +6,8 @@ use App\Http\Controllers\userController;
 use Illuminate\Support\Facades\Route;
 
 use App\Models\Post;
+use PHPUnit\Metadata\PostCondition;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +20,8 @@ use App\Models\Post;
 */
 
 Route::middleware(['guest'])->group(function () {
+
+
     // show signup form
     Route::get('/signup', [userController::class, 'create']);
 
@@ -29,61 +33,84 @@ Route::middleware(['guest'])->group(function () {
 
     // login user
     Route::post('/login', [userController::class, 'authencticate'])->name('login');
+
+
 });
 
 Route::middleware(['auth'])
     ->group(function () {
-        // get all posts
-        Route::get('/', [PostController::class, 'index']);
+
+    Route::get('/', [PostController::class, 'index']);
+
+    // show form for adding new post 
+    Route::get('/posts/create', [PostController::class, 'create']);
 
 
-        // show form for adding new post 
-        Route::get('/posts/create', [PostController::class, 'create']);
+    // store the post in database
+    Route::post('/posts', [PostController::class, 'store']);
+
+    // show form for edit a post
+    Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
+
+    // update the post in the database
+    Route::put('/posts/{post}', [PostController::class, 'update']);
+
+    // delete the post from the database
+    Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 
 
-        // store the post in database
-        Route::post('/posts', [PostController::class, 'store']);
-
-        // show form for edit a post
-        Route::get('/posts/{post}/edit', [PostController::class, 'edit']);
-
-        // update the post in the database
-        Route::put('/posts/{post}', [PostController::class, 'update']);
-
-        // delete the post from the database
-        Route::delete('/posts/{post}', [PostController::class, 'destroy']);
+    // get a single post
+    Route::get('/posts/{post}', [PostController::class, 'show']);
 
 
-        // get a single post
-        Route::get('/posts/{post}', [PostController::class, 'show']);
+    //!=====================================================================  
 
-        //!=====================================================================  
-
-        // Add new comment
-        Route::post('/posts/comments/{post}', [CommentController::class, 'store']);
+    // Add new comment
+    Route::post('/posts/comments/{post}', [CommentController::class, 'store']);
 
 
-        // Show form to edit a comment
-        Route::get('/posts/comments/{comment}', [CommentController::class, 'edit']);
+    // Show form to edit a comment
+    Route::get('/posts/comments/{comment}', [CommentController::class, 'edit']);
 
 
-        // Show form to edit a comment
-        Route::put('/posts/comments/{comment}', [CommentController::class, 'update']);
+    // Show form to edit a comment
+    Route::put('/posts/comments/{comment}', [CommentController::class, 'update']);
 
-        // Delete a comment
-        Route::delete('/posts/comments/{comment}', [CommentController::class, 'destroy']);
+    // Delete a comment
+    Route::delete('/posts/comments/{comment}', [CommentController::class, 'destroy']);
 
-        // Show form to reply to a comment
-        Route::get('/posts/comments/{comment}/reply', [CommentController::class, 'reply']);
+    // Show form to reply to a comment
+    Route::get('/posts/comments/{comment}/reply', [CommentController::class, 'reply']);
 
-        // Reply to a comment
-        Route::post('/posts/comments/{comment}/reply', [CommentController::class, 'storeReply']);
-
-
-        // Like a comment
-        Route::post('/posts/comments/{comment}/like', [CommentController::class, 'like']);
+    // Reply to a comment
+    Route::post('/posts/comments/{comment}/reply', [CommentController::class, 'storeReply']);
 
 
-        // logout the user
-        Route::post('/logout', [userController::class, 'logout']);
+    // Like a comment
+    Route::post('/posts/comments/{comment}/like', [CommentController::class, 'like']);
+
+    //!===========================================================================
+    // Show my posts
+    Route::get('/my-posts', [PostController::class, 'myPosts']);
+
+    //!===========================================================================
+    // Show profile
+    Route::get('/profile', [userController::class, 'profile']);
+        
+    // Form to edit profile
+    Route::get('/profile/edit/{user}', [userController::class, 'editProfile']);
+    
+    // Update the profile
+    Route::put('/profile/edit/{user}', [userController::class, 'updateProfile']);
+
+    // show confirm delete profile
+    Route::get('/profile/{user}/delete', [userController::class, 'confirmDelete']);
+
+ 
+    Route::post('/profile/{user}/delete', [userController::class, 'delete']);
+
+    //!===========================================================================
+    // logout the user
+    Route::post('/logout', [userController::class, 'logout']);
+    
     });
